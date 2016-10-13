@@ -30,7 +30,8 @@ namespace Ecommerce.Migrations
                                         PasswordHash = password,
                                         PhoneNumber = "0000000",
                                         FirstName = "Administrator",
-                                        DateOfBirth = DateTime.Now
+                                        DateOfBirth = DateTime.Now,
+                                        EmailConfirmed = true
                                     };
             context.Users.AddOrUpdate(u => u.UserName, user);
             user.Roles.Add(new IdentityUserRole

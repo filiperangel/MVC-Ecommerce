@@ -206,7 +206,7 @@ namespace Ecommerce.Controllers
         {
             ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
             if (user != null)
-                ViewBag.NumberofItems = db.Carts.Where(c => c.UserId == user.Id).Count();
+                ViewBag.NumberofItems = db.Carts.Where(c => c.UserId == user.Id).Sum(x => x.Quantity);
             else
                 ViewBag.NumberofItems = 0;
             return PartialView();
