@@ -1,0 +1,49 @@
+﻿@model Ecommerce.Models.Cart
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Add to Cart</h4>
+        <hr />
+    </div>
+    <table class="table col-md-offset-1">
+        <tr>
+            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Book.title)</th>
+            <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+                <img src="@Model.Book.CoverImagePath" style="width: 50px; height:80px;"  />
+            </td>
+            <td>
+                @Html.HiddenFor(model => model.Book.Id)
+                @Html.DisplayTextFor(model => model.Book.title)
+            </td>
+            <td>
+                @Html.EditorFor(model => model.Quantity)
+            </td>
+            <td><input type="submit" id="btnSubmit" value="Add to Cart" class="btn btn-default glyphicon-shopping-cart" /></td>
+        </tr>
+    </table>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                
+            </div>
+        </div>
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/multiselectListBox")
+            @Scripts.Render("~/bundles/autogrowtextarea")
+        }

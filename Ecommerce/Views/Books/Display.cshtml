@@ -1,0 +1,39 @@
+﻿@model ICollection<Ecommerce.Models.Book>
+
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/thumbnail-gallery")
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-xs-6 thumbnail">
+                <center>
+                    <a class="thumb" href="#">
+                        @if (item.CoverImagePath.IsEmpty())
+                        {
+                            <img class="img-responsive" src="~/Images/coverNotAvailable.jpg" style = "width: 150px; height: 200px" alt = "" >
+                        }
+                        else
+                        {
+                            <img class="img-responsive" src="@item.CoverImagePath" style="width: 150px; height: 200px" alt="">
+                        }
+                    </a>
+
+                    <span>@item.title</span>
+                    <br />
+                    <span>@item.Price.ToString("c")</span>
+                    <br />
+                    <a href="@Url.Action("Add", "Carts", new { id = item.Id })" class="btn btn-default glyphicon glyphicon-shopping-cart" role="button">Add to cart</a>
+                </center>
+            </div>
+        }
+
+        @for(int i = 1; i <= (Math.Ceiling((decimal)Model.Count() / 8)); i++)
+        {
+            <span>@i.ToString();</span>
+        }
+    </div>
+</div>
+

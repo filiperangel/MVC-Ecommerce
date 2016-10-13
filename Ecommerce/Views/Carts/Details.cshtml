@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Ecommerce.Models.Cart>
+
+
+<div>
+    <table class="table table-striped">
+        <tr>
+            <th>
+
+            </th>
+            <th>@Html.DisplayNameFor(model => model.Book.title)</th>
+            <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+            <th><span>Total</span></th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        @{ double cartTotal = 0; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.Book.CoverImagePath" style="width: 50px; height:80px;" />
+                    </td>
+                    <td>
+                        @Html.HiddenFor(model => item.Book.Id)
+                        @Html.DisplayTextFor(model => item.Book.title)
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(model => item.Quantity)
+                    </td>
+                    <td>
+                        @{cartTotal += @item.Total; }
+                            @item.Total.ToString("c")
+                    </td>
+                    <td>
+                        @Html.HiddenFor(model => item.ItemNumber, new { id = "ItemNumber"})
+                        <a href="@Url.Action("Edit", new { id = item.ItemNumber})" class="btn btn-warning glyphicon glyphicon-pencil"></a>
+                    </td>
+                    <td><a href="@Url.Action("Delete", new { id = item.ItemNumber})" class="btn btn-danger glyphicon glyphicon-trash"></a></td>
+                </tr>
+            }
+            <tfoot>
+                <tr class="success">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Total: @cartTotal.ToString("c")</td>
+                    <td><a href="" class="btn btn-warning">Check out</a></td>
+                </tr>
+            </tfoot>
+        
+    </table>
+</div>

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Ecommerce.Models.Genre>
+
+@*<table class="table table-bordered">
+        @if(Request.QueryString["genre"] != null)
+        {
+            <tr style="background-color: lightgray;">
+                <td>@Html.ActionLink("See all categories", "Index", "Home")</td>
+            </tr>
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(@item.Description, "Index", "Home", new { genre = @item.Id}, null)
+                </td>
+            </tr>
+        }
+    </table>*@
+<button class="glyphicon glyphicon-tasks visible-sm visible-xs" data-toggle="collapse" data-target="#categories">Show Categories</button>
+
+<ul class="nav collapse navbar-collapse nav-pills nav-stacked" id="categories">
+    @if (Request.QueryString["genre"] != null)
+    {
+        <li style="background-color: lightgray;">
+            @Html.ActionLink("See all categories", "Index", "Home")
+        </li>
+    }
+    @foreach (var item in Model)
+    {
+        <li class="table-bordered">
+
+            @Html.ActionLink(@item.Description, "Index", "Home", new { genre = @item.Id }, null)
+
+        </li>
+    }
+
+</ul>

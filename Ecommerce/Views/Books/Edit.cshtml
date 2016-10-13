@@ -1,0 +1,143 @@
+﻿@model Ecommerce.ViewModel.BookViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Books", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Book</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.book.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.book.title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.book.title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.book.title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.book.publishDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.book.publishDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.book.publishDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.book.ISBN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.book.ISBN, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.book.ISBN, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.book.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.book.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.book.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Genres Assigned</label>
+                @Html.ListBox("selectedGenres", new MultiSelectList(Model.book.Genres, "Id", "Description"), new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-1">
+                <div class="form-group">
+                    <button type="button" id="bntRightGenre" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button type="button" id="btnLeftGenre" class="btn btn-success">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Available Genres</label>
+                @Html.ListBox("availableGenres", new MultiSelectList(Model.AvailableGenres, "Id", "Description"), new { @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Authors Assigned</label>
+                @Html.ListBox("selectedAuthors", new MultiSelectList(Model.book.Authors, "Id", "Name"), new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-1">
+                <div class="form-group">
+                    <button type="button" id="bntRight" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button type="button" id="btnLeft" class="btn btn-success">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Available Authors</label>
+                @Html.ListBox("availableAuthors", new MultiSelectList(Model.AvailableAuthors, "Id", "Name"), new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.book.Synopsis, htmlAttributes : new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.book.Synopsis, htmlAttributes: new { style = "width: 100%; max-width: 100%; height: 30px; max-height: 200px;" }) 
+            </div>
+        </div>
+
+        <div class="form-group">
+            @if (Model.book.CoverImagePath.IsEmpty())
+            {
+                <img src="~/Images/coverNotAvailable.jpg"/>
+            }
+            else
+            {
+                <img src="@Model.book.CoverImagePath"/>
+            }
+        </div>
+
+        <div class="form-group">
+            <span class="control-label col-md-2">Update cover image</span>
+            <input type="file" id="coverImg" name="coverImg" accept="image/*" />
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnSubmit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/multiselectListBox")
+    @Scripts.Render("~/bundles/autogrowtextarea")
+}
